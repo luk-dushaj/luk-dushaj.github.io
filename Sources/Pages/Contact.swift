@@ -9,7 +9,7 @@ import Foundation
 import Ignite
 
 struct Contact: StaticPage {
-    var title = "contact"
+    var title = "Contact"
     var body: some HTML {
         Text("You can always contact me from these:")
             .font(.title1)
