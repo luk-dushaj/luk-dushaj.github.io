@@ -11,12 +11,17 @@ import Ignite
 struct Contact: StaticPage {
     var title = "Contact"
     var body: some HTML {
-        Text("You can always contact me from these:")
-            .font(.title1)
+        HStack {
+            Text("Contact Information")
+                .font(.title1)
+            Spacer()
+        }
         List {
             Link("Email", target: "mailto:dushajluk@gmail.com")
+                .font(.title3)
             Link("LinkedIn", target: "https://www.linkedin.com/in/luk-dushaj-66a8b7329/")
+                .font(.title3)
         }
-        .listStyle(.group)
+        .listStyle(.plain)
     }
 }

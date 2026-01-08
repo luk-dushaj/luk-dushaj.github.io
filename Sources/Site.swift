@@ -14,6 +14,18 @@ struct IgniteWebsite {
     }
 }
 
+struct Header: HTML {
+    let title: String
+    let spacing: Int = 10
+    let fontType: Font.Style = .title3
+    var body: some HTML {
+        VStack {}.frame(width: spacing, height: spacing)
+        Text(title)
+            .font(fontType)
+        VStack {}.frame(width: spacing, height: spacing)
+    }
+}
+
 struct Website: Site {
     var name = "Portfolio"
     var url = URL(static: "https://www.example.com")
