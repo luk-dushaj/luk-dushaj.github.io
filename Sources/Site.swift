@@ -14,6 +14,53 @@ struct IgniteWebsite {
     }
 }
 
+/*
+ HStack {
+     Link("About", target: About())
+     Link("Contact", target: Contact())
+ }
+ .font(.title3)
+ */
+
+struct NavList: HTML {
+    let currentPage: String
+    var pageList: [String: any StaticPage] = [
+        "Home": Home(),
+        "About": About(),
+        "Contact": Contact()
+    ]
+    var remainingPageList: [String: any StaticPage] {
+        pageList.filter {
+            $0.key != currentPage
+        }
+    }
+    var body: some HTML {
+        HStack {
+            ForEach(remainingPageList) { key, value in
+                Link(key, target: value)
+            }
+        }
+        .font(.title3)
+    }
+}
+
+struct PageHeader: HTML {
+    let title: String
+    
+    init(_ title: String) {
+        self.title = title
+    }
+    
+    var body: some HTML {
+        HStack {
+            Text(title)
+                .font(.title1)
+            Spacer()
+            NavList(currentPage: title)
+        }
+    }
+}
+
 struct Header: HTML {
     let title: String
     let spacing: Int = 10
@@ -42,6 +89,7 @@ struct Website: Site {
     var layout = MainLayout()
     
     var staticPages: [any StaticPage] {
+        Home()
         About()
         Contact()
     }

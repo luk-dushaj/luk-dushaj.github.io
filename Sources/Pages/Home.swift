@@ -3,6 +3,7 @@ import Ignite
 
 struct Home: StaticPage {
     var title = "Home"
+    let testflight = "https://testflight.apple.com/join/rpdQVUTe"
     
     var body: some HTML {
         HStack {
@@ -25,11 +26,7 @@ struct Home: StaticPage {
         Text("Jazmine has a history of teaching along with being in multiple groups to spread the message of mistreatment in groups of minorities.")
         Text("My group didn't want our app to be too boring, politically focused or too broad.")
         Text("We wanted to make an educational and fun app which is game oriented targeted for people who want to learn about the struggles of people of color in the professional/educational spaces.")
-        HStack(spacing: 5) {
-            Text("This is where")
-            Text(" Empathy Experience ").fontWeight(.bold)
-            Text("comes in.")
-        }
+        Text(markdown: "This is where **Empathy Experience** comes in.")
         Header("Separations of Concerns")
         Text("In our group now that we have an idea of what we want to accomplish.")
         Text("Before we even began our jobs, we had a consensus vote if we should prioritze learning or execution. My group chose execution so I went along with that.")
@@ -48,10 +45,10 @@ struct Home: StaticPage {
         VStack(spacing: 10) {
             Text("App Demonstration")
             Video("/videos/empathy-experience.mov")
-                .style(.width, "100%")
-                .style(.maxWidth, "100%")
+                .style(.width, "50%")
+                .style(.maxWidth, "50%")
                 .style(.height, "auto")
-            Link("TestFlight", target: "https://testflight.apple.com/join/rpdQVUTe")
+            Link("TestFlight", target: testflight)
         }
         .font(.title4)
     }
