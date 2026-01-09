@@ -5,7 +5,7 @@ import Ignite
 struct IgniteWebsite {
     static func main() async {
         var site = Website()
-
+        
         do {
             try await site.publish()
         } catch {
@@ -18,6 +18,11 @@ struct Header: HTML {
     let title: String
     let spacing: Int = 10
     let fontType: Font.Style = .title3
+    
+    init(_ title: String) {
+        self.title = title
+    }
+    
     var body: some HTML {
         VStack {}.frame(width: spacing, height: spacing)
         Text(title)
@@ -30,14 +35,14 @@ struct Website: Site {
     var name = "Portfolio"
     var url = URL(static: "https://www.example.com")
     var builtInIconsEnabled = true
-
+    
     var author = "Luk Dushaj"
-
+    
     var homePage = Home()
     var layout = MainLayout()
     
     var staticPages: [any StaticPage] {
-        AboutMe()
+        About()
         Contact()
     }
 }
