@@ -5,7 +5,11 @@ struct MainLayout: Layout {
     var body: some Document {
         Body {
             content
-            IgniteFooter()
+            HStack {
+                IgniteFooter()
+                Spacer()
+                Text(markdown: "Open Source on [GitHub](https://github.com/luk-dushaj/luk-dushaj.github.io)")
+            }
         }
     }
 }
