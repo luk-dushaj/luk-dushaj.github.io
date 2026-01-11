@@ -6,16 +6,7 @@ struct Home: StaticPage {
     let testflight = "https://testflight.apple.com/join/rpdQVUTe"
     
     var body: some HTML {
-        HStack {
-            Text("Luk's Portfolio")
-                .font(.title1)
-            Spacer()
-            HStack {
-                Link("About", target: About())
-                Link("Contact", target: Contact())
-            }
-            .font(.title3)
-        }
+        PageHeader(title, altTitle: "Home")
         VStack {}.frame(width: 20, height: 20)
         Text("Empathy Experience")
             .font(.title2)
@@ -35,9 +26,8 @@ struct Home: StaticPage {
         Header("Performance under Pressure")
         Text("Since this was an ambitious project considering the amount of time we had for development which was like 7 days worth of class time. Along with making last minute design decisions this was phenomenal execution.")
         Text("I had to take this project home outside of class to make sure the job is finished.")
-        Text("I most of the codebase including haptics, UI/UX, logic along with even designing the app icon.")
         Text("The architecture I went with was MVVM since this was a game so essentially normal SwiftUI navigation is off the table (users can't go back and cheat). The ViewModel made it very easy for me to store logic and switch views programatically.")
-        Text("My designers were so busy with performing the final touches on the UI that we forgot about the app icon itself. So the night before I remembered and took it upon myself.")
+        Text("My designers were so busy with performing the final touches on the UI that we forgot about the app icon itself. So the night before, I remembered and took it upon myself.")
         Text("Icon Composer was surprisingly pretty simple to someone like me who doesn't daily drive designer tools. I learned a lot about and more importantly how to apply a icon composer file as app icon in Xcode through a godsend Reddit post.")
         Header("Resolution")
         Text("After all that, we accomplished actually in fact over exceeded our original expectations.")

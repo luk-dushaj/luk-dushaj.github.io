@@ -6,10 +6,16 @@ struct MainLayout: Layout {
         Body {
             content
             HStack {
-                IgniteFooter()
+                Text {
+                    "Created in Swift with "
+                    Link("Ignite", target: URL(static: "https://github.com/twostraws/Ignite"))
+                }
                 Spacer()
                 Text(markdown: "Open Source on [GitHub](https://github.com/luk-dushaj/luk-dushaj.github.io)")
             }
+            .padding(.vertical)
+            .horizontalAlignment(.center)
+            .margin(.top, .xLarge)
         }
     }
 }
