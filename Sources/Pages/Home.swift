@@ -6,7 +6,7 @@ struct Home: StaticPage {
     let testflight = "https://testflight.apple.com/join/rpdQVUTe"
     
     var body: some HTML {
-        PageHeader(title, altTitle: "Home")
+        PageHeader(title, altTitle: "Luk's Portfolio")
         VStack {}.frame(width: 20, height: 20)
         Text("Empathy Experience")
             .font(.title2)
