@@ -81,7 +81,7 @@ struct CollapsableSection<Content: HTML>: HTML {
             if startsCollapsed {
                 content
                     .id(id)
-                    .class("d-none")
+                    .class(id)
             } else {
                 content
                     .id(id)
