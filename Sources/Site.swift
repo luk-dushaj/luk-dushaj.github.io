@@ -49,6 +49,47 @@ struct NavList: HTML {
     }
 }
 
+// Kept complaining about any "Type" not conforming to "Type" so generics it is
+public struct ToggleElement: Action {
+    let id: String
+
+    public init(_ id: String) {
+        self.id = id
+    }
+
+    public func compile() -> String {
+        "document.getElementById('\(id)').classList.toggle('d-none')"
+    }
+}
+
+struct CollapsableSection<Content: HTML>: HTML {
+    let text: Text
+    let id = UUID().uuidString
+    let alignment: HorizontalAlignment = .leading
+    let spacing: Int = 10
+    let startsCollapsed: Bool = true
+
+    @HTMLBuilder var content: Content
+
+    var body: some HTML {
+        VStack(alignment: alignment, spacing: spacing) {
+            text
+                .onClick(actions: {
+                    ToggleElement(id)
+                })
+
+            if startsCollapsed {
+                content
+                    .id(id)
+                    .class("d-none")
+            } else {
+                content
+                    .id(id)
+            }
+        }
+    }
+}
+
 struct PageHeader: HTML {
     let title: String
     var altTitle = ""
@@ -96,8 +137,9 @@ struct Website: Site {
     var layout = MainLayout()
     
     var staticPages: [any StaticPage] {
-        Home()
-        About()
-        Contact()
+        let pages = NavList(currentPage: "Home").pages
+        for page in pages {
+            page.content
+        }
     }
 }
