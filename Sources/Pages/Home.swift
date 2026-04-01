@@ -8,7 +8,7 @@ struct Home: StaticPage {
     var body: some HTML {
         PageHeader(title, altTitle: "Luk's Portfolio")
         VStack {}.frame(width: 20, height: 20)
-        CollapsableSection(text: Text("Hello World"), content: {
+        CollapsableSection(text: Text("Hello World").font(.title1), content: {
             HStack {
                 Text("HIM")
                 Text("Test")

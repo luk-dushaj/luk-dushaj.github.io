@@ -51,20 +51,32 @@ struct NavList: HTML {
 
 // Kept complaining about any "Type" not conforming to "Type" so generics it is
 public struct ToggleElement: Action {
-    let id: String
-
-    public init(_ id: String) {
-        self.id = id
-    }
+    let contentId: String
+    let arrowId: String
 
     public func compile() -> String {
-        "document.getElementById('\(id)').classList.toggle('d-none')"
+        """
+        const content = document.getElementById('\(contentId)');
+        const arrow = document.getElementById('\(arrowId)');
+        const isOpen = arrow.dataset.horizontal === "true";
+
+        if (isOpen) {
+            content.classList.add('d-none');
+            arrow.dataset.horizontal = "false";
+            arrow.style.transform = "rotate(90deg)";
+        } else {
+            content.classList.remove('d-none');
+            arrow.dataset.horizontal = "true";
+            arrow.style.transform = "rotate(0deg)";
+        }
+        """
     }
 }
 
-struct CollapsableSection<Content: HTML>: HTML {
+struct CollapsableSection<Text: HTML, Content: HTML>: HTML {
     let text: Text
     let id = UUID().uuidString
+    let arrowId = UUID().uuidString
     let alignment: HorizontalAlignment = .leading
     let spacing: Int = 10
     let startsCollapsed: Bool = true
@@ -73,18 +85,21 @@ struct CollapsableSection<Content: HTML>: HTML {
 
     var body: some HTML {
         VStack(alignment: alignment, spacing: spacing) {
-            text
-                .onClick(actions: {
-                    ToggleElement(id)
-                })
+            HStack(spacing: 10) {
+                text
+                Image("/images/arrow_forward.svg", description: "arrow")
+                    .attribute("data-horizontal", "true")
+                    .id(arrowId)
+            }
+            .onClick(actions: {
+                ToggleElement(contentId: id, arrowId: arrowId)
+            })
+            
+            content
+                .id(id)
 
             if startsCollapsed {
-                content
-                    .id(id)
-                    .class(id)
-            } else {
-                content
-                    .id(id)
+                Script(code: "document.getElementById('\(id)').classList.add('d-none'); document.getElementById('\(arrowId)').dataset.horizontal === 'false'")
             }
         }
     }
