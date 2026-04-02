@@ -55,21 +55,7 @@ public struct ToggleElement: Action {
     let arrowId: String
 
     public func compile() -> String {
-        """
-        const content = document.getElementById('\(contentId)');
-        const arrow = document.getElementById('\(arrowId)');
-        const isOpen = arrow.dataset.horizontal === "true";
-
-        if (isOpen) {
-            content.classList.add('d-none');
-            arrow.dataset.horizontal = "false";
-            arrow.style.transform = "rotate(90deg)";
-        } else {
-            content.classList.remove('d-none');
-            arrow.dataset.horizontal = "true";
-            arrow.style.transform = "rotate(0deg)";
-        }
-        """
+        "flipArrow('\(contentId)', '\(arrowId)')"
     }
 }
 
@@ -85,12 +71,29 @@ struct CollapsableSection<Text: HTML, Content: HTML>: HTML {
 
     var body: some HTML {
         VStack(alignment: alignment, spacing: spacing) {
+            Script(code: """
+                function flipArrow(contentId, arrowId) {        
+                    const content = document.getElementById(contentId);
+                    const arrow = document.getElementById(arrowId);
+                    const isOpen = arrow.getAttribute('horizontal') === "false";
+                
+                    if (isOpen) {
+                        content.classList.add('d-none');
+                        arrow.setAttribute('horizontal', 'true');
+                        arrow.style.transform = "rotate(90deg)";
+                    } else {
+                        content.classList.remove('d-none');
+                        arrow.setAttribute('horizontal', 'false');
+                        arrow.style.transform = "rotate(0deg)";
+                    }
+                }
+                """)
             HStack(spacing: 10) {
                 text
                 Image("/images/arrow_forward.svg", description: "arrow")
-                    .attribute("data-horizontal", "true")
                     .id(arrowId)
             }
+            .attribute("horizontal", "false")
             .onClick(actions: {
                 ToggleElement(contentId: id, arrowId: arrowId)
             })
@@ -99,7 +102,7 @@ struct CollapsableSection<Text: HTML, Content: HTML>: HTML {
                 .id(id)
 
             if startsCollapsed {
-                Script(code: "document.getElementById('\(id)').classList.add('d-none'); document.getElementById('\(arrowId)').dataset.horizontal === 'false'")
+                Script(code: "document.getElementById('\(id)').classList.add('d-none'); document.getElementById('\(arrowId)').setAttribute('horizontal', 'true');")
             }
         }
     }
