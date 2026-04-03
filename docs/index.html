@@ -74,14 +74,36 @@
           </div>
         </div>
       </div>
-      <div class="vstack" style="gap: 10px">
-        <p class="mb-0 align-self-start" onclick="document.getElementById('E9208B2A-8687-4BD0-9A03-208A3AAA71D0').classList.remove('d-none')">Test</p>
-        <div id="E9208B2A-8687-4BD0-9A03-208A3AAA71D0" class="mb-0 align-self-start hstack gap-3">
-          <p class="mb-0 align-self-center">Hello</p>
-          <p class="mb-0 align-self-center">World</p>
-        </div>
-      </div>
       <div class="vstack" style="width: 20px; height: 20px"></div>
+      <div class="vstack" style="gap: 10px">
+        <script class="mb-0 align-self-start">function flipArrow(contentId, arrowId) {        
+    const content = document.getElementById(contentId);
+    const arrow = document.getElementById(arrowId);
+
+    const isHidden = content.classList.contains('d-none');
+
+    if (isHidden) {
+        // OPEN
+        content.classList.remove('d-none');
+        arrow.style.transform = "rotate(90deg)";
+        alert("open");
+    } else {
+        // CLOSE
+        content.classList.add('d-none');
+        arrow.style.transform = "rotate(0deg)";
+        alert("close");
+    }
+}</script>
+        <div class="mb-0 align-self-start hstack" style="gap: 10px" onclick="flipArrow('E57852F8-7FC0-4D32-842C-E7A464BC8C0F', 'ED72AC48-20F5-48A8-ACE1-9D14D93747CC')">
+          <h1 class="mb-0 align-self-center">Hello World</h1>
+          <img id="ED72AC48-20F5-48A8-ACE1-9D14D93747CC" src="/images/arrow_forward.svg" alt="arrow" class="mb-0 align-self-center" />
+        </div>
+        <div id="E57852F8-7FC0-4D32-842C-E7A464BC8C0F" class="mb-0 align-self-start hstack gap-3">
+          <p class="mb-0 align-self-center">HIM</p>
+          <p class="mb-0 align-self-center">Test</p>
+        </div>
+        <script class="mb-0 align-self-start">document.getElementById('ED72AC48-20F5-48A8-ACE1-9D14D93747CC').style.transform = 'rotate(90deg)';</script>
+      </div>
       <h2>Empathy Experience</h2>
       <div class="vstack" style="width: 10px; height: 10px"></div>
       <h3>The Context</h3>

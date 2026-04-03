@@ -63,37 +63,45 @@ struct CollapsableSection<Text: HTML, Content: HTML>: HTML {
     let text: Text
     let id = UUID().uuidString
     let arrowId = UUID().uuidString
-    let alignment: HorizontalAlignment = .leading
-    let spacing: Int = 10
-    let startsCollapsed: Bool = true
-
-    @HTMLBuilder var content: Content
+    let alignment: HorizontalAlignment
+    let spacing: Int
+    let startsCollapsed: Bool
+    
+    @HTMLBuilder let content: Content
+    
+    init(text: Text, alignment: HorizontalAlignment = .leading, spacing: Int = 10, startsCollapsed: Bool = true, content: @escaping () -> Content) {
+        self.text = text
+        self.alignment = alignment
+        self.spacing = spacing
+        self.startsCollapsed = startsCollapsed
+        self.content = content()
+    }
 
     var body: some HTML {
         VStack(alignment: alignment, spacing: spacing) {
             Script(code: """
-                function flipArrow(contentId, arrowId) {        
-                    const content = document.getElementById(contentId);
-                    const arrow = document.getElementById(arrowId);
-                    const isOpen = arrow.getAttribute('horizontal') === "false";
-                
-                    if (isOpen) {
-                        content.classList.add('d-none');
-                        arrow.setAttribute('horizontal', 'true');
-                        arrow.style.transform = "rotate(90deg)";
-                    } else {
-                        content.classList.remove('d-none');
-                        arrow.setAttribute('horizontal', 'false');
-                        arrow.style.transform = "rotate(0deg)";
-                    }
+            function flipArrow(contentId, arrowId) {        
+                const content = document.getElementById(contentId);
+                const arrow = document.getElementById(arrowId);
+
+                const isHidden = content.classList.contains('d-none');
+
+                if (isHidden) {
+                    // OPEN
+                    content.classList.remove('d-none');
+                    arrow.style.transform = "rotate(90deg)";
+                } else {
+                    // CLOSE
+                    content.classList.add('d-none');
+                    arrow.style.transform = "rotate(0deg)";
                 }
-                """)
+            }
+            """)
             HStack(spacing: 10) {
                 text
                 Image("/images/arrow_forward.svg", description: "arrow")
                     .id(arrowId)
             }
-            .attribute("horizontal", "false")
             .onClick(actions: {
                 ToggleElement(contentId: id, arrowId: arrowId)
             })
@@ -102,7 +110,9 @@ struct CollapsableSection<Text: HTML, Content: HTML>: HTML {
                 .id(id)
 
             if startsCollapsed {
-                Script(code: "document.getElementById('\(id)').classList.add('d-none'); document.getElementById('\(arrowId)').setAttribute('horizontal', 'true');")
+                Script(code: "document.getElementById('\(id)').classList.add('d-none');")
+            } else {
+                Script(code: "document.getElementById('\(arrowId)').style.transform = 'rotate(90deg)';")
             }
         }
     }
