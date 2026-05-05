@@ -67,9 +67,15 @@ struct CollapsableSection<Text: HTML, Content: HTML>: HTML {
     let spacing: Int
     let startsCollapsed: Bool
     
-    @HTMLBuilder let content: Content
+    let content: Content
     
-    init(text: Text, alignment: HorizontalAlignment = .leading, spacing: Int = 10, startsCollapsed: Bool = true, content: @escaping () -> Content) {
+    init(
+        text: Text,
+        alignment: HorizontalAlignment = .leading,
+        spacing: Int = 10,
+        startsCollapsed: Bool = true,
+        @HTMLBuilder content: @escaping () -> Content
+    ) {
         self.text = text
         self.alignment = alignment
         self.spacing = spacing
@@ -106,8 +112,9 @@ struct CollapsableSection<Text: HTML, Content: HTML>: HTML {
                 ToggleElement(contentId: id, arrowId: arrowId)
             })
             
-            content
-                .id(id)
+            Section {
+                content
+            }.id(id)
 
             if startsCollapsed {
                 Script(code: "document.getElementById('\(id)').classList.add('d-none');")

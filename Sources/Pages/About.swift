@@ -30,6 +30,7 @@ struct About: StaticPage {
             Text("In general, I love the overall history of Apple platforms along with how UI/UX has changed over the years.")
             Text("With my extensive knowledge in software, I always try to make sure users are secured, safe and feel comfortable in my applications.")
             Text(markdown: "On my spare time, I love learning stuff like UNIX, hardware, networking *(definitely my weakest)* and more.")
+            Link("Resume", target: "/static/resume.pdf")
         }
     }
 }
